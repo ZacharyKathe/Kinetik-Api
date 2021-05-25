@@ -12,19 +12,27 @@ const seedDatabase = async () => {
   // Create users from user JSON seed
   const users = await User.bulkCreate(userSeedData);
   
+  console.log('--------Users Seeded -----------')
+
   const goals = await Goal.bulkCreate(goalSeedData);
+
+  console.log('--------Goal Seeded -----------')
   
   const groups = await Group.bulkCreate(groupSeedData);
   
+  console.log('--------Groups Seeded -----------')
+
   const comments = await Comment.bulkCreate(commentSeedData);
 
-  await groups[0].addUser(0)
-  await groups[0].addUser(1)
-  await groups[0].addUser(2)
+  console.log('--------Comments Seeded -----------')
+
+  await groups[0].addUsers([1,2,3])
+  // await groups[0].addUser(1)
+  // await groups[0].addUser(2)
  
-  await groups[1].addUser(3)
-  await groups[1].addUser(4)
-  await groups[1].addUser(5)
+  await groups[1].addUsers([3,4,5])
+  // await groups[1].addUser(4)
+  // await groups[1].addUser(5)
 
 
   process.exit(0);
