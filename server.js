@@ -1,38 +1,45 @@
 const express = require("express");
-const router = express.Router();
-const mongoose = require("mongoose");
+const session = require('express-session');
+const routes = require('./routes');
 const logger = require("morgan");
-const cors = require("cors");
-const db = require("./models");
-const { getMaxListeners } = require("./models/User");
+const cors = require("cors")
+require("dotenv").config();
 
-const PORT = process.env.PORT || 3003;
+const sequelize = require('./config/connection');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+// const { getMaxListeners } = require("./models/User");
+
+const PORT = process.env.PORT || 3002;
 
 const app = express();
 
-app.use(logger("dev"));
+const sess = {
+  secret: process.env.SECRET,
+  cookie: {
+    maxAge:1000*60*60*2
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize
+  })
+};
 
-app.use('/api', router);
+app.use(session(sess));
+
+app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
 app.use(express.static("public"));
 
-// app.use(cors());
+app.use(cors());
 
-// MAKE SURE YOU CREATE A 'kinetik' DB IN YOUR LOCAL MONGO DB FIRST 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/kinetik", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+app.use(routes);
+
+sequelize.sync({ force: true }).then(() => {
+  app.listen(PORT, () => console.log(`Now listening on http://localhost:${PORT}`));
 });
 
-const connection = mongoose.connection;
-
-connection.once("open", function () {
-  console.log("Connection with MongoDB was successful");
-});
-
-app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}!`);
-});
