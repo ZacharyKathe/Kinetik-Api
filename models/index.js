@@ -20,9 +20,9 @@ User.belongsToMany(Group, {
 });
 
 // Many users can have the same group!
-// Group.belongsToMany(User, {
-//   through: "GroupUser"
-// })
+Group.belongsToMany(User, {
+  through: "GroupUser"
+})
 
 // Each goal can have many comments!
 Goal.hasMany(Comment, {
