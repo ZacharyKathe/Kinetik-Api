@@ -1,16 +1,17 @@
 const router = require("express").Router();
-const goalController = require("../../controllers/goalController");
+// const goalController = require("../../controllers/goalController");
+const { User, Goal } = require('../../models')
 
-// Matches with "/api/goals"
-router.route("/")
-  .get(goalController.findAll)
-  .post(goalController.create);
-
-// Matches with "/api/goals/:id"
-router
-  .route("/:id")
-  .get(goalController.findById)
-  .put(goalController.update)
-  .delete(goalController.remove);
+router.get('/', async (req, res) => {
+  try {
+    const goalData = await Goal.findAll({
+      include: [{ model: User }]
+    });
+    const allGoals = goalData.map((goal) => goal.get({ plain: true }));
+    res.status(200).json(allGoals);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 module.exports = router;

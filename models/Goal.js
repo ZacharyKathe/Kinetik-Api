@@ -20,17 +20,31 @@ Goal.init(
     },
 
     goalDescription: {
-      type: TEXT,
-      trim: true
+      type: DataTypes.TEXT,
+      allowNull: true
     },
 
     goalCreated: {
-      type: Date,
+      type: DataTypes.DATE,
       default: Date.now
+    },
+
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id'
+      }
     }
+  },
+
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'Goal',
   }
 );
-
-const Goal = mongoose.model("Goal", GoalSchema);
 
 module.exports = Goal;
