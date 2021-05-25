@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS kinetik_db;
+
+CREATE DATABASE kinetik_db;

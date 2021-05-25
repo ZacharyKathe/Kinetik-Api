@@ -1,0 +1,47 @@
+[
+  {
+    "comment_content": "Clean that house.",
+    "user_id": 1,
+    "goal_id": 3
+  },
+  {
+    "comment_content": "Avoid those sugars bro!",
+    "user_id": 1,
+    "goal_id": 4
+  },
+  {
+    "comment_content": "Hey, way to go! Keep up the good drinking work.",
+    "user_id": 2,
+    "goal_id": 1
+  },
+  {
+    "comment_content": "Damn you a fit bro.",
+    "user_id": 2,
+    "goal_id": 2
+  },
+  {
+    "comment_content": "Wow so smart, such books.",
+    "user_id": 3,
+    "goal_id": 7
+  },
+  {
+    "comment_content": "That song better be about me.",
+    "user_id": 3,
+    "goal_id": 9
+  },
+  {
+    "comment_content": "This project sounds amazing. Its about setting goals right?",
+    "user_id": 4,
+    "goal_id": 5
+  },
+  {
+    "comment_content": "Yeah, that song better be about Sarah.",
+    "user_id": 4,
+    "goal_id": 9
+  },
+  {
+    "comment_content": "I want to use this app so badly.",
+    "user_id": 5,
+    "goal_id": 5
+  }
+]
