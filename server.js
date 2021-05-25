@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const logger = require("morgan");
-// const cors = require("cors")
+const cors = require("cors");
 const db = require("./models");
-// const { getMaxListeners } = require("./models/User");
+const { getMaxListeners } = require("./models/User");
 
 const PORT = process.env.PORT || 3003;
 
