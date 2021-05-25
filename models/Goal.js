@@ -1,21 +1,50 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Model, DataTypes, TEXT } = require('sequelize');
+const sequelize = require('../config/connection');
+const moment = require('moment');
 
-const GoalSchema = new Schema({
-  goal_name: {
-    type: String,
-    trim: true,
-    required: "Group name is Required"
+class Goal extends Model {}
+
+Goal.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+
+    goalName: {
+      type: DataTypes.STRING,
+      trim: true,
+      allowNull: false
+    },
+
+    goalDescription: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+
+    goalCreated: {
+      type: DataTypes.DATE,
+      default: Date.now
+    },
+
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id'
+      }
+    }
   },
 
-  category: {
-    type: String,
-    trim: true,
-    required: true
-  },
-
-});
-
-const Goal = mongoose.model("Goal", GoalSchema);
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'Goal',
+  }
+);
 
 module.exports = Goal;
