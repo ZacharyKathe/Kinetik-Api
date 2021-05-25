@@ -1,22 +1,27 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
-const GroupSchema = new Schema({
-  group_name: {
-    type: String,
-    trim: true,
-    required: "Group name is Required"
+class Group extends Model {}
+
+Group.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
-
-  users: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  ],
-
-});
-
-const Group = mongoose.model("Group", GroupSchema);
+  {
+    sequelize,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'Group',
+  }
+);
 
 module.exports = Group;
