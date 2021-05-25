@@ -1,17 +1,27 @@
 [
   {
-    "username": "Bobhikes",
+    "username": "BobbyKnobby",
     "email": "bob@hiking.com",
     "password": "password"
   },
   {
-    "username": "Jimclimbs",
+    "username": "JimMcLimbs",
     "email": "jim@climbing.com",
     "password": "password"
   },
   {
-    "username": "Sarahexplores",
+    "username": "SarahfoFarah",
     "email": "sarah@exploring.com",
+    "password": "password"
+  },
+  {
+    "username": "TommyTwoToes",
+    "email": "tommy@yourface.com",
+    "password": "password"
+  },
+  {
+    "username": "JoeBiden",
+    "email": "joeschmoe@whitehouse.gov",
     "password": "password"
   }
 ]

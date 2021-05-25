@@ -32,16 +32,16 @@ Goal.init(
 
     goalCreated: {
       type: DataTypes.DATEONLY,
-      get: function () {
-        return moment.utc(this.getDataValue('goalCreated')).format('YYYY-MM-DD')
-      }
+      // get: function () {
+      //   return moment.utc(this.getDataValue('goalCreated')).format('YYYY-MM-DD')
+      // }
     },
 
     goalFinishBy: {
       type: DataTypes.DATEONLY,
-      get: function () {
-        return moment.utc(this.getDataValue('goalFinishBy')).format('YYYY-MM-DD')
-      },
+      // get: function () {
+      //   return moment.utc(this.getDataValue('goalFinishBy')).format('YYYY-MM-DD')
+      // },
       allowNull: true,
     },
 
