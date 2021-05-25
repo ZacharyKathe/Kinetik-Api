@@ -2,7 +2,7 @@ const { Model, DataTypes, TEXT } = require('sequelize');
 const sequelize = require('../config/connection');
 const moment = require('moment');
 
-class Goal extends Model {}
+class Goal extends Model { }
 
 Goal.init(
   {
@@ -19,20 +19,36 @@ Goal.init(
       allowNull: false
     },
 
+    goalFrequency: {
+      type: DataTypes.STRING,
+      trim: true,
+      allowNull: false
+    },
+
     goalDescription: {
       type: DataTypes.TEXT,
       allowNull: true
     },
 
     goalCreated: {
-      type: DataTypes.DATE,
-      default: Date.now
+      type: DataTypes.DATEONLY,
+      get: function () {
+        return moment.utc(this.getDataValue('goalCreated')).format('YYYY-MM-DD')
+      }
+    },
+
+    goalFinishBy: {
+      type: DataTypes.DATEONLY,
+      get: function () {
+        return moment.utc(this.getDataValue('goalFinishBy')).format('YYYY-MM-DD')
+      },
+      allowNull: true,
     },
 
     user_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'user',
+        model: 'User',
         key: 'id'
       }
     }

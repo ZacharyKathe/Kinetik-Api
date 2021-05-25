@@ -1,0 +1,74 @@
+[
+  {
+    "goalName": "Diet",
+    "goalFrequency": "Daily",
+    "goalDescription": "Drink 4L of water",
+    "goalCreated": "2021-05-22",
+    "goalFinishBy": "2021-08-12",
+    "user_id": 1
+  },
+  {
+    "goalName": "Exercise",
+    "goalFrequency": "Daily",
+    "goalDescription": "Run 3 miles",
+    "goalCreated": "2021-05-22",
+    "goalFinishBy": "2021-08-12",
+    "user_id": 1
+  },
+  {
+    "goalName": "Productivity",
+    "goalFrequency": "Weekly",
+    "goalDescription": "Clean the house thoroughly",
+    "goalCreated": "2021-05-22",
+    "goalFinishBy": "2021-08-12",
+    "user_id": 2
+  },
+  {
+    "goalName": "Diet",
+    "goalFrequency": "Daily",
+    "goalDescription": "Avoid sugars",
+    "goalCreated": "2021-05-22",
+    "goalFinishBy": "2021-08-12",
+    "user_id": 2
+  },
+  {
+    "goalName": "Productivity",
+    "goalFrequency": "One time",
+    "goalDescription": "Finish Project 3 like a boss",
+    "goalCreated": "2021-05-22",
+    "goalFinishBy": "2021-08-12",
+    "user_id": 3
+  },
+  {
+    "goalName": "Exercise",
+    "goalFrequency": "Weekly",
+    "goalDescription": "Do yoga 3 mornings a week",
+    "goalCreated": "2021-05-22",
+    "goalFinishBy": "2021-08-12",
+    "user_id": 3
+  },
+  {
+    "goalName": "Intellectual",
+    "goalFrequency": "Daily",
+    "goalDescription": "Drink 4L of water every day",
+    "goalCreated": "2021-05-22",
+    "goalFinishBy": "2021-08-12",
+    "user_id": 4
+  },
+  {
+    "goalName": "Drink water",
+    "goalFrequency": "Daily",
+    "goalDescription": "Drink 4L of water every day",
+    "goalCreated": "2021-05-22",
+    "goalFinishBy": "2021-08-12",
+    "user_id": 4
+  },
+  {
+    "goalName": "Drink water",
+    "goalFrequency": "Daily",
+    "goalDescription": "Drink 4L of water every day",
+    "goalCreated": "2021-05-22",
+    "goalFinishBy": "2021-08-12",
+    "user_id": 5
+  }
+]

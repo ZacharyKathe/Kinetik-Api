@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Pacific Crest Trail",
+    "location": "California, Oregon, Washington",
+    "description": "A 2,650 mile thru hike from Mexico to Canada along the western mountain ranges of the US.",
+    "starting_date": "2021-04-30",
+    "ending_date": "2021-09-17",
+    "distance_mi": 2650.00,
+    "user_id": 1
+  },
+  {
+    "name": "The Enchanments",
+    "location": "Leavenworth, WA",
+    "description": "A mesmerizing, grueling hike through the upper-enchanments of the Cascades",
+    "starting_date": "2022-06-02",
+    "ending_date": "2022-06-05",
+    "distance_mi": 19.5,
+    "user_id": 1
+  },
+  {
+    "name": "Mt. Whitney Summit",
+    "location": "Near Lone Pine, CA",
+    "description": "A gradual but steady steep hike up to the tallest point in the lower 48 states through the whitney portal.",
+    "starting_date": "2021-08-15",
+    "ending_date": "2021-08-16",
+    "distance_mi": 20.9,
+    "user_id": 2
+  },
+  {
+    "name": "The Arizona Trail",
+    "location": "Length of Arizona",
+    "description": "This hike takes you up from the Mexican border through dozens of diverse Arizonian biomes until you reach the border of Utah.",
+    "starting_date": "2022-03-05",
+    "ending_date": "2022-05-12",
+    "distance_mi": 803.2,
+    "user_id": 2
+  },
+  {
+    "name": "The Wonderland Trail",
+    "location": "Mt Rainier, WA",
+    "description": "The Wonderland Trail is 93 miles (150 km) long and encircles Mount Rainier. It is a strenuous hike with lots of elevation gain and loss, through lowland forests and valleys and into high alpine and sub-alpine areas.",
+    "starting_date": "2023-07-10",
+    "ending_date": "2023-07-17",
+    "distance_mi": 93,
+    "user_id": 3
+  }
+]
