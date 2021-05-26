@@ -8,38 +8,33 @@ const { User, Goal, Group } = require('../models')
 // All GROUP ROUTES, prefix: /groups
 
 // Send all the groups for that user to be displayed on their group page
-router.get("/", async (req, res) => {
-  if (req.session.logged_in) {
-    try {
+router.get("/", tokenAuth, async (req, res) => {
+  try {
+    const userGroupData = await Group.findAll({
+      where: {
+        user_id: req.user.id
+      },
+      include: [{ model: User }]
+    });
 
-      const userGroupData = await Group.findAll({
-        include: { model: User }
-      });
-      const userGroups = userGroupData.map((group) => group.get({ plain: true }))
-
-      res.status(200).json(userGroups)
-    } catch (err) {
-      res.json(err);
-    }
-  } else {
-    res.status(401);
+    const userGroups = userGroupData.map((group) => group.get({ plain: true }))
+    res.status(200).json(userGroups)
+  } catch (err) {
+    res.json(err);
   }
 })
 
-router.get("/:id", async (req, res) => {
+// Go to a specific group page
+router.get("/:id", tokenAuth, async (req, res) => {
   try {
     const groupData = await Group.findByPk(req.params.id, {
       include: [{ model: User }]
     })
 
-    // const currTripData = await Trip.findByPk(req.params.id, {
-    //   include: [{ model: GearItem }]
-    // })
-    // const userGear = userGearData.map((gear) => gear.get({ plain: true }))
-    // const currTrip = currTripData.get({ plain: true })
-    // userGear.username = req.session.user.username;
+    res.status(200).json(groupData);
 
   } catch (err) {
+    console.log(err);
     res.json(err);
   }
 })

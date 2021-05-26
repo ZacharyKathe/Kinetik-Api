@@ -11,43 +11,46 @@ router.get('/', async (req, res) => {
     const allGoals = goalData.map((goal) => goal.get({ plain: true }));
     res.status(200).json(allGoals);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
 
 //Get One Goal
 router.get('/:id', async (req, res) => {
-  console.log(req.params.id);
   try {
-    const goalData = await Goal.findById(req.params.id,
+    const goalData = await Goal.findByPk(req.params.id,
       {
-        include: [{ model: User }, { model: Comment }]
+        include: [{ model: User },
+        {
+          model: Comment,
+          include: { model: User }
+        }]
       });
 
     const thisGoal = goalData.get({ plain: true });
 
     res.status(200).json(thisGoal);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
 
-router.post('/', async (req, res) => {
+// Create new goal!
+router.post('/', tokenAuth, async (req, res) => {
   try {
-    const newGoal = await Goal.create({
-      goalName: req.body.goalName,
-      goalDescription: req.body.goalDescription,
-      user_id: req.session.user_id
-    });
+    const newGoal = await Goal.create(req.body);
 
-    const goal = newGoal.get({ plain: true });
-    res.status(200).json(goal);
+    res.status(200).json(newGoal);
   } catch (err) {
+    console.log(err);
     res.status(400).json(err);
   }
 });
 
-router.put('/:id', async (req, res) => {
+// Edit this specific goal
+router.put('/:id', tokenAuth, async (req, res) => {
   try {
     const editGoal = await Goal.findOne(
       {
@@ -56,24 +59,20 @@ router.put('/:id', async (req, res) => {
         }
       }
     )
-    await editGoal.update(
-      {
-        goalName: req.body.goalName,
-        goalDescription: req.body.goalDescription
-      }
-    )
+    await editGoal.update(req.body)
     res.json(200).json(editGoal);
   } catch (err) {
+    console.log(err);
     res.json(400).json(err);
   }
 });
 
+// Delete this specific goal
 router.delete('/:id', tokenAuth, async (req, res) => {
   try {
     const goalData = await Goal.destroy({
       where: {
-        id: req.params.id,
-        user_id: req.session.user_id
+        id: req.params.id
       },
     });
 
@@ -84,6 +83,7 @@ router.delete('/:id', tokenAuth, async (req, res) => {
 
     res.status(200).json(goalData);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });

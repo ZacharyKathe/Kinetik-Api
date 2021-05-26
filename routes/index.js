@@ -7,7 +7,6 @@ const groupRoutes = require("./group-routes");
 
 // Home routes
 router.use('/', homeRoutes);
-
 // Group Routes
 router.use('/groups', groupRoutes)
 // API Routes

@@ -10,15 +10,16 @@ const { User, Goal, Group } = require('../models')
 // User home, displays their goals
 router.get("/dashboard", tokenAuth, async (req, res) => {
   try {
-    console.log(req.user);
     const userGoalData = await Goal.findAll({
-      // where: {
-      //   user_id: req.user.id
-      // }
+      where: {
+        user_id: req.user.id
+      }
     })
-    const userGoal = userGoalData.map((goal) => goal.get({ plain: true }))
-    res.status(200).json(userGoal)
+
+    const userGoals = userGoalData.map((goal) => goal.get({ plain: true }))
+    res.status(200).json(userGoals)
   } catch (err) {
+    console.log(err);
     res.json(err);
   }
 })
