@@ -1,6 +1,7 @@
 const router = require("express").Router();
+const apiAuth = require("../../middleware/apiAuth")
 // const goalController = require("../../controllers/goalController");
-const { User, Goal } = require('../../models')
+const { User, Goal, Comment } = require('../../models')
 
 //Get All Goals
 router.get('/', async (req, res) => {
@@ -17,17 +18,16 @@ router.get('/', async (req, res) => {
 
 //Get One Goal
 router.get('/:id', async (req, res) => {
+  console.log(req.params.id);
   try {
-    const goalData = await Goal.findOne({
-      where: {
-        id: req.params.id
-      },
-      include: [{ model: User }]
-    });
+    const goalData = await Goal.findById(req.params.id,
+      {
+        include: [{ model: User }, { model: Comment }]
+      });
 
-    const allGoals = goalData.get({ plain: true });
+    const thisGoal = goalData.get({ plain: true });
 
-    res.status(200).json(allGoals);
+    res.status(200).json(thisGoal);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -74,12 +74,12 @@ router.delete('/:id', apiAuth, async (req, res) => {
     const goalData = await Goal.destroy({
       where: {
         id: req.params.id,
-      user_id: req.session.user_id      
+        user_id: req.session.user_id
       },
     });
 
     if (!goalData) {
-      res.status(404).json({ message: "No Goal with that id."});
+      res.status(404).json({ message: "No Goal with that id." });
       return;
     }
 
