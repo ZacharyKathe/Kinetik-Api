@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const apiAuth = require("../../middleware/apiAuth")
-// const goalController = require("../../controllers/goalController");
+const tokenAuth = require("../../middleware/tokenAuth")
 const { User, Goal, Comment } = require('../../models')
 
 //Get All Goals
@@ -69,7 +68,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', apiAuth, async (req, res) => {
+router.delete('/:id', tokenAuth, async (req, res) => {
   try {
     const goalData = await Goal.destroy({
       where: {

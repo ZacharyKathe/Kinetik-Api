@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const tokenAuth = require("../../middleware/tokenAuth")
 // const userController = require("../../controllers/userController");
 const { User, Goal, Group } = require('../../models')
 
@@ -34,18 +35,37 @@ router.get('/:id', async (req, res) => {
 
 // Creates a new group
 router.post('/', async (req, res) => {
+  console.log(req.body);
   try {
-    const newGroupData = await Group.create({
-      name: req.body.name,
-    });
+    const newGroup = await Group.create(req.body);
+    console.log(newGroup);
 
     // Auto adds current user to this group
-    newGroupData.addUser(req.session.user._id)
-    
-    const newGroup = newGroupData.get({ plain: true });
+    // newGroup.addUser(req.session.user.id)
+  
     res.status(200).json(newGroup);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err);
+  }
+});
+
+router.delete('/:id', tokenAuth, async (req, res) => {
+  try {
+    const groupData = await Group.destroy({
+      where: {
+        id: req.params.id,
+        // user_id: req.session.user_id
+      },
+    });
+
+    if (!groupData) {
+      res.status(404).json({ message: "No Goal with that id." });
+      return;
+    }
+
+    res.status(200).json(groupData);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 

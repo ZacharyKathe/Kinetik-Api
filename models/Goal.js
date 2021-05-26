@@ -6,56 +6,41 @@ class Goal extends Model { }
 
 Goal.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
-    },
-
-    goalCategory: {
+    goal_category: {
       type: DataTypes.STRING,
       allowNull: false
-    }
-    goalName: {
+    },
+    goal_name: {
       type: DataTypes.STRING,
       trim: true,
       allowNull: false
     },
 
-    goalFrequency: {
+    goal_frequency: {
       type: DataTypes.STRING,
       trim: true,
       allowNull: false
     },
 
-    goalDescription: {
+    goal_description: {
       type: DataTypes.TEXT,
       allowNull: true
     },
 
-    goalCreated: {
+    goal_start: {
       type: DataTypes.DATEONLY,
       // get: function () {
       //   return moment.utc(this.getDataValue('goalCreated')).format('YYYY-MM-DD')
       // }
     },
 
-    goalFinishBy: {
+    goal_finish: {
       type: DataTypes.DATEONLY,
       // get: function () {
       //   return moment.utc(this.getDataValue('goalFinishBy')).format('YYYY-MM-DD')
       // },
       allowNull: true,
     },
-
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'User',
-        key: 'id'
-      }
-    }
   },
 
   {
