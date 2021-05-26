@@ -13,6 +13,10 @@ Goal.init(
       autoIncrement: true
     },
 
+    goalCategory: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
     goalName: {
       type: DataTypes.STRING,
       trim: true,
