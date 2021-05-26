@@ -1,6 +1,8 @@
 const router = require("express").Router();
 // const userController = require("../../controllers/userController");
-const { User, Goal } = require('../../models')
+const { User, Goal, Comment } = require('../../models')
+const bcrypt = require("bcrypt")
+const jwt = require('jsonwebtoken');
 
 // Matches with "/api/users"
 router.get('/', async (req, res) => {
@@ -13,6 +15,7 @@ router.get('/', async (req, res) => {
 
     const allUsers = userData.map(user => user.get({ plain: true }))
     res.status(200).json(allUsers);
+
   } catch (err) {
     res.status(500).json(err);
   }
@@ -21,8 +24,17 @@ router.get('/', async (req, res) => {
 // Matches with "/api/users/:id"
 router.get('/:id', async (req, res) => {
   try {
+
     const userData = await User.findByPk(req.params.id, {
-      include: [{ model: Goal }, { model: User }],
+      include: [{
+        model: Goal,
+        as: "goals",
+        attributes: ['goal_category']
+      }],
+      // attributes: {
+      //   exclude: ["password"],
+      //   // Doesn't work:
+      // }
     });
 
     if (!userData) {
@@ -31,23 +43,22 @@ router.get('/:id', async (req, res) => {
     }
 
     res.status(200).json(userData);
+
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// Adds new user to /api/users
+// SIGNUP: Adds new user to /api/users
 router.post('/', async (req, res) => {
   console.log('route reached')
   console.log(req.body);
   try {
-    const newUser = await User.create(req.body)
-
-    req.session.save(() => {
-      req.session.user_id = newUser.id;
-      req.session.logged_in = true;
+    const newUser = await User.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password
     })
-    console.log(req.session.user);
 
     res.status(200).json(newUser)
   } catch (err) {
@@ -55,7 +66,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Login route, checks if email and password matches the specific user in the /api/users, and on success, creates session for them
+// LOGIN: Login route, checks if email and password matches the specific user in the /api/users, and on success, creates session for them
 router.post('/login', async (req, res) => {
   console.log('route reached!')
 
@@ -66,17 +77,19 @@ router.post('/login', async (req, res) => {
       }
     })
     if (!foundUser) {
-      req.session.destroy();
-      return res.status(401).send('No account with this email found')
+      return res.status(401).send('Username or password is incorrect')
     }
+    // If the password matches the user password, create new token with user data and secret.
     if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-      req.session.user = {
-        id: foundUser.id,
+      const token = jwt.sign({
+        username: foundUser.username,
         email: foundUser.email,
-        username: foundUser.username
-      };
-      console.log(req.session)
-      return res.json(req.session)
+        id: foundUser.id
+      }, process.env.JWT_SECRET,
+        {
+          expiresIn: "2h"
+        })
+      res.json({ token, foundUser })
     }
   } catch (err) {
     req.session.destroy();
@@ -87,7 +100,9 @@ router.post('/login', async (req, res) => {
 
 
 router.get('/logout', (req, res) => {
-  req.session.destroy();
+  if (err) {
+    res.status(500).json({ message: "error, could not log out" })
+  }
   res.status(200).send('Successfully logged out');
 });
 
