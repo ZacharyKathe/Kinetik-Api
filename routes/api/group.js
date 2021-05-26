@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
     const allgroups = groupData.map(group => group.get({ plain: true }))
     res.status(200).json(allgroups);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -29,32 +30,50 @@ router.get('/:id', async (req, res) => {
 
     res.status(200).json(groupData);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
 
 // Creates a new group
-router.post('/', async (req, res) => {
+router.post('/', tokenAuth, async (req, res) => {
   console.log(req.body);
   try {
     const newGroup = await Group.create(req.body);
     console.log(newGroup);
-
-    // Auto adds current user to this group
-    // newGroup.addUser(req.session.user.id)
+    // Must add user_id to group from front end
   
     res.status(200).json(newGroup);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
 
+// Edit this specific group
+router.put('/:id', tokenAuth, async (req, res) => {
+  try {
+    const editGroup = await Group.findOne(
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    )
+    await editGroup.update(req.body)
+    res.json(200).json(editGroup);
+  } catch (err) {
+    console.log(err);
+    res.json(400).json(err);
+  }
+});
+
+// Delete this specific group
 router.delete('/:id', tokenAuth, async (req, res) => {
   try {
     const groupData = await Group.destroy({
       where: {
         id: req.params.id,
-        // user_id: req.session.user_id
       },
     });
 
@@ -65,6 +84,7 @@ router.delete('/:id', tokenAuth, async (req, res) => {
 
     res.status(200).json(groupData);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });

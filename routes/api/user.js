@@ -1,10 +1,10 @@
 const router = require("express").Router();
-// const userController = require("../../controllers/userController");
-const { User, Goal, Comment } = require('../../models')
+const { User, Goal, Group, Comment } = require('../../models')
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken');
+const tokenAuth = require("../../middleware/tokenAuth");
 
-// Matches with "/api/users"
+// Matches with "/api/users", find ALL users
 router.get('/', async (req, res) => {
   try {
     const userData = await User.findAll({
@@ -17,24 +17,24 @@ router.get('/', async (req, res) => {
     res.status(200).json(allUsers);
 
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 })
 
-// Matches with "/api/users/:id"
+router.get('/test', tokenAuth, (req, res) => {
+  res.json(req.user)
+})
+
+// Matches with "/api/users/:id", find ONE user
 router.get('/:id', async (req, res) => {
   try {
 
     const userData = await User.findByPk(req.params.id, {
-      include: [{
-        model: Goal,
-        as: "goals",
-        attributes: ['goal_category']
-      }],
-      // attributes: {
-      //   exclude: ["password"],
-      //   // Doesn't work:
-      // }
+      include: [{ model: Goal }, { model: Group }],
+      attributes: {
+        exclude: ["password"],
+      }
     });
 
     if (!userData) {
@@ -45,58 +45,87 @@ router.get('/:id', async (req, res) => {
     res.status(200).json(userData);
 
   } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// Delete specific user (how to make it so user can only delete their profile?)
+router.delete('/:id', tokenAuth, async (req, res) => {
+  try {
+
+    const userData = await User.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.status(200).json(userData);
+
+    if (!userData) {
+      res.status(404).json({ message: 'No user found with that id!' });
+      return;
+    }
+
+  } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
 
 // SIGNUP: Adds new user to /api/users
-router.post('/', async (req, res) => {
-  console.log('route reached')
-  console.log(req.body);
-  try {
-    const newUser = await User.create({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
-    })
-
-    res.status(200).json(newUser)
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+router.post("/signup", (req, res) => {
+  User.create({
+    username: req.body.username,
+    password: req.body.password,
+    email: req.body.email
+  }).then(newUser => {
+    const token = jwt.sign({
+      name: newUser.name,
+      email: newUser.email,
+      id: newUser.id
+    },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "2h"
+      })
+    res.json({ token, user: newUser })
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({ message: "an error occured", err })
+  })
+})
 
 // LOGIN: Login route, checks if email and password matches the specific user in the /api/users, and on success, creates session for them
-router.post('/login', async (req, res) => {
-  console.log('route reached!')
-
-  try {
-    const foundUser = await User.findOne({
-      where: {
-        email: req.body.email
-      }
-    })
-    if (!foundUser) {
-      return res.status(401).send('Username or password is incorrect')
+router.post("/login", (req, res) => {
+  User.findOne({
+    where: {
+      email: req.body.email
     }
-    // If the password matches the user password, create new token with user data and secret.
-    if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+  }).then(user => {
+    if (!user) {
+      console.log('user not found')
+      return res.status(403).json({ message: "auth failed" })
+    } else if (!bcrypt.compareSync(req.body.password, user.password)) {
+      console.log(req.body.password);
+      console.log("passwords dont match")
+      return res.status(403).json({ message: "auth failed" })
+    } else {
+      console.log(user);
       const token = jwt.sign({
-        username: foundUser.username,
-        email: foundUser.email,
-        id: foundUser.id
-      }, process.env.JWT_SECRET,
+        username: user.username,
+        email: user.email,
+        id: user.id
+      },
+        process.env.JWT_SECRET,
         {
           expiresIn: "2h"
         })
-      res.json({ token, foundUser })
+      console.log(token);
+      res.json({ token, user })
     }
-  } catch (err) {
-    req.session.destroy();
-    return res.status(401).send('Username or password is incorrect')
+  })
+})
 
-  }
-});
 
 
 router.get('/logout', (req, res) => {
