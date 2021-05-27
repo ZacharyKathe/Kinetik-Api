@@ -4,7 +4,7 @@ const Group = require('./Group');
 const Comment = require('./Comment');
 
 // One user can have many goals!
-User.hasMany = (Goal, {
+User.hasMany(Goal, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE'
 });
@@ -37,6 +37,16 @@ Comment.belongsTo(Goal, {
   foreignKey: 'goal_id',
 })
 
+// Each user can have many comments!
+User.hasMany(Comment, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE'
+})
+
+// Each comment belongs to only one user!
+Comment.belongsTo(User, {
+  foreignKey: 'user_id',
+})
 
 
 
