@@ -17,13 +17,11 @@ Goal.belongsTo(User, {
 // Each user can be a part of many groups!
 User.belongsToMany(Group, {
   through: 'GroupUser',
-  as: "groups"
 });
 
 // Many users can have the same group!
 Group.belongsToMany(User, {
   through: "GroupUser",
-  as: 'users'
 })
 
 // Each goal can have many comments!
