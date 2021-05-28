@@ -3,21 +3,26 @@ const jwt = require('jsonwebtoken');
 // const { json } = require('sequelize/types');
 const router = express.Router();
 const tokenAuth = require("../middleware/tokenAuth")
-const { User, Goal, Group } = require('../models')
+const { User, Goal, Group, Comment } = require('../models')
 
 // All HOME ROUTES, prefix: /
 
 // User home, displays their goals
 router.get("/dashboard", tokenAuth, async (req, res) => {
   try {
-    const userGoalData = await Goal.findAll({
+    console.log(req.user.id);
+    const loggedUser = User.findOne({
       where: {
-        user_id: req.user.id
-      }
+        id: req.user.id
+      },
+      include: [{ 
+        model: Goal,
+        include: [{ model: Comment }]
+      }, { model: Group }]
     })
 
-    const userGoals = userGoalData.map((goal) => goal.get({ plain: true }))
-    res.status(200).json(userGoals)
+
+    res.status(200).json(loggedUser)
   } catch (err) {
     console.log(err);
     res.json(err);
