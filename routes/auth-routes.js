@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const tokenAuth = require("../middleware/tokenAuth")
 const { User, Goal, Group } = require('../models')
-const bcrypt = require("bcrypt")
+const bcrypt = require('bcrypt');
+
 // SIGNUP: prefix: /
 router.post("/signup", (req, res) => {
   User.create({
