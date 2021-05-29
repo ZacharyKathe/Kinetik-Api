@@ -20,7 +20,7 @@ router.get("/dashboard", tokenAuth, async (req, res) => {
         include: [{ model: Comment }]
       }, { model: Group }]
     })
-
+    console.log(loggedUser);
 
     res.status(200).json(loggedUser)
   } catch (err) {
