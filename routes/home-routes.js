@@ -11,7 +11,7 @@ const { User, Goal, Group, Comment } = require('../models')
 router.get("/dashboard", tokenAuth, async (req, res) => {
   try {
     console.log(req.user.id);
-    const loggedUser = User.findOne({
+    const loggedUser = await User.findOne({
       where: {
         id: req.user.id
       },
