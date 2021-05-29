@@ -18,8 +18,10 @@ router.get("/dashboard", tokenAuth, async (req, res) => {
       include: [{ 
         model: Goal,
         include: [{ model: Comment }]
-      }, { model: Group }]
-    })
+      }, { 
+        model: Group,
+        include: [{ model: User }]}]
+    })  
     console.log(loggedUser);
 
     res.status(200).json(loggedUser)
