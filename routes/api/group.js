@@ -60,6 +60,7 @@ router.put('/:id', tokenAuth, async (req, res) => {
         }
       }
     )
+    await editGroup.addUser(req.user.id);
     await editGroup.update(req.body)
     res.json(200).json(editGroup);
   } catch (err) {
@@ -88,5 +89,6 @@ router.delete('/:id', tokenAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 
 module.exports = router;
