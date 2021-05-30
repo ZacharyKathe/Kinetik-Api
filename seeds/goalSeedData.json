@@ -4,8 +4,10 @@
     "goal_name": "Water drinking",
     "goal_frequency": "Daily",
     "goal_description": "Drink 4L of water",
+    "goal_progress": 0,
+    "goal_target": 1,
+    "value_type": "Liters",
     "goal_start": "2021-05-22",
-    "goal_inishBy": "2021-08-12",
     "user_id": 1
   },
   {
@@ -13,6 +15,9 @@
     "goal_name": "Running",
     "goal_frequency": "Daily",
     "goal_description": "Run 3 miles",
+    "goal_progress": 3,
+    "goal_target": 3,
+    "value_type": "Miles",
     "goal_start": "2021-05-15",
     "goal_finish": "2021-09-22",
     "user_id": 1
@@ -22,6 +27,9 @@
     "goal_name": "house cleaning",
     "goal_frequency": "Weekly",
     "goal_description": "Clean the house thoroughly",
+    "goal_progress": 0,
+    "goal_target": 1,
+    "value_type": "Event",
     "goal_start": "2021-04-22",
     "goal_finish": "2021-10-12",
     "user_id": 2
@@ -31,6 +39,9 @@
     "goal_name": "No sugars!",
     "goal_frequency": "Daily",
     "goal_description": "Avoid sugars",
+    "goal_progress": 1,
+    "goal_target": 1,
+    "value_type": "Other",
     "goal_start": "2021-05-20",
     "goal_finish": "2021-06-10",
     "user_id": 2
@@ -40,6 +51,9 @@
     "goal_name": "project 3",
     "goal_frequency": "One time",
     "goal_description": "Finish Project 3 like a boss",
+    "goal_progress": 0,
+    "goal_target": 1,
+    "value_type": "Event",
     "goal_start": "2021-05-22",
     "goal_finish": "2021-06-06",
     "user_id": 3
@@ -49,6 +63,9 @@
     "goal_name": "morning yoga",
     "goal_frequency": "Weekly",
     "goal_description": "Do yoga 3 mornings a week",
+    "goal_progress": 2,
+    "goal_target": 3,
+    "value_type": "Event",
     "goal_start": "2021-05-25",
     "goal_finish": "2021-07-25",
     "user_id": 3
@@ -58,6 +75,9 @@
     "goal_name": "book reading",
     "goal_frequency": "Monthly",
     "goal_description": "Read 2 books a month",
+    "goal_progress": 1,
+    "goal_target": 2,
+    "value_type": "Other",
     "goal_start": "2021-05-22",
     "goal_finish": "2021-12-31",
     "user_id": 4
@@ -67,6 +87,9 @@
     "goal_name": "bike riding",
     "goal_frequency": "One time",
     "goal_description": "Learn to ride a bike",
+    "goal_progress": 1,
+    "goal_target": 1,
+    "value_type": "Other",
     "goal_start": "2021-05-22",
     "goal_finish": "2021-07-01",
     "user_id": 4
@@ -76,6 +99,9 @@
     "goal_name": "songwriting",
     "goal_frequency": "One time",
     "goal_description": "Write a song",
+    "goal_progress": 0,
+    "goal_target": 1,
+    "value_type": "Other",
     "goal_start": "2021-05-22",
     "goal_finish": "2021-06-22",
     "user_id": 5
