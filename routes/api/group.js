@@ -43,6 +43,7 @@ router.post('/', tokenAuth, async (req, res) => {
     console.log(newGroup);
     // Must add user_id to group from front end
   
+    await newGroup.addUser(req.user.id);
     res.status(200).json(newGroup);
   } catch (err) {
     console.log(err);
@@ -60,7 +61,6 @@ router.put('/:id', tokenAuth, async (req, res) => {
         }
       }
     )
-    await editGroup.addUser(req.user.id);
     await editGroup.update(req.body)
     res.json(200).json(editGroup);
   } catch (err) {
@@ -77,7 +77,7 @@ router.delete('/:id', tokenAuth, async (req, res) => {
         id: req.params.id,
       },
     });
-
+    console.log(groupData);
     if (!groupData) {
       res.status(404).json({ message: "No Goal with that id." });
       return;
