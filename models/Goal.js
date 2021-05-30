@@ -27,6 +27,21 @@ Goal.init(
       allowNull: true
     },
 
+    goal_progress : {
+      type: DataTypes.INTEGER,
+      default: 0,
+    },
+
+    goal_target : {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+
+    value_type : {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+
     goal_start: {
       type: DataTypes.DATEONLY,
       // get: function () {

@@ -41,8 +41,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', tokenAuth, async (req, res) => {
   try {
     const newGoal = await Goal.create(req.body);
+    console.log(req.user);
     newGoal.user_id = req.user.id;
-
+    newGoal.save();
     res.status(200).json(newGoal);
   } catch (err) {
     console.log(err);
