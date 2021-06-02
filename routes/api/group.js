@@ -61,6 +61,8 @@ router.put('/:id', tokenAuth, async (req, res) => {
         }
       }
     )
+    // Adds new user to this group if thst user accepts invite
+    await editGroup.addUser(req.user.id);
     await editGroup.update(req.body)
     res.json(200).json(editGroup);
   } catch (err) {
