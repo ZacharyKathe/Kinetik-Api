@@ -29,7 +29,7 @@ Goal.init(
 
     goal_progress : {
       type: DataTypes.INTEGER,
-      default: 0,
+      defaultValue: 0,
     },
 
     goal_target : {
@@ -56,6 +56,19 @@ Goal.init(
       // },
       allowNull: true,
     },
+
+    isComplete: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+
+    completedDate: {
+      type: DataTypes.DATEONLY
+    },
+
+    lastRefresh: {
+      type: DataTypes.DATE
+    }
   },
 
   {

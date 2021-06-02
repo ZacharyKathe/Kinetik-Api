@@ -13,7 +13,7 @@ router.post("/signup", (req, res) => {
     email: req.body.email
   }).then(newUser => {
     const token = jwt.sign({
-      name: newUser.name,
+      username: newUser.username,
       email: newUser.email,
       id: newUser.id
     },
@@ -21,6 +21,8 @@ router.post("/signup", (req, res) => {
       {
         expiresIn: "2h"
       })
+    console.log(token);
+    console.log(newUser);
     res.json({ token, user: newUser })
   }).catch(err => {
     console.log(err);
