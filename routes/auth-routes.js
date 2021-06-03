@@ -5,6 +5,16 @@ const tokenAuth = require("../middleware/tokenAuth")
 const { User, Goal, Group } = require('../models')
 const bcrypt = require('bcrypt');
 
+
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  service: "Yahoo",
+  auth: {
+    user: "kinetikapp@yahoo.com",
+    pass: "nqltgyqzfaaqtkit"
+  }
+});
+
 // SIGNUP: prefix: /
 router.post("/signup", (req, res) => {
   User.create({
@@ -69,5 +79,34 @@ router.get('/logout', (req, res) => {
   }
   res.status(200).send('Successfully logged out');
 });
+
+
+
+router.post('/invite', tokenAuth, (req, res) => {
+  console.log(req.body);
+  const options = {
+    from: "kinetikapp@yahoo.com",
+    to: req.body.invitedUser,
+    subject: `Hey, join my goals group "${req.body.groupName}"!`,
+    text: `I'd love for you to come join my group, and we can help encourage each other as we strive to achieve our goals!
+    
+    If you do not have a profile yet, first visit here and sign up: <a href="http://localhost:3000">Signup</a>
+
+    If you already do, just login, and then go here to accept my invitation: <a href="http://${req.body.groupUrl}>Accept</a>
+
+    Happy goal-achieving!
+    `
+  }
+  console.log(options);
+  transporter.sendMail(options, (err, info) => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      console.log("sent:" + info.response);
+      res.json(200)
+    }
+  })
+})
 
 module.exports = router;
