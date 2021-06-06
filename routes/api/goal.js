@@ -1,12 +1,16 @@
 const router = require("express").Router();
 const tokenAuth = require("../../middleware/tokenAuth")
+<<<<<<< HEAD
+const { User, Goal, Comment, CompletedDates } = require('../../models')
+=======
 const { User, Goal, Comment, Group } = require('../../models')
+>>>>>>> 46d15ae7125f21b0de7c44947a6b41c99a063a85
 
 //Get All Goals
 router.get('/', async (req, res) => {
   try {
     const goalData = await Goal.findAll({
-      include: [{ model: User }]
+      include: [{ model: User }, { model: CompletedDates }]
     });
     const allGoals = goalData.map((goal) => goal.get({ plain: true }));
     res.status(200).json(allGoals);
@@ -21,15 +25,14 @@ router.get('/:id', async (req, res) => {
   try {
     const goalData = await Goal.findByPk(req.params.id,
       {
-        include: [{ model: User },
-        {
-          model: Comment,
-          include: { model: User }
-        },
-        {
-          model: Group
-        }
-      ]
+        include: [
+          { model: User },
+          {
+            model: Comment,
+            include: { model: User }
+          },
+          { model: CompletedDates }
+        ]
       });
 
     const thisGoal = goalData.get({ plain: true });
