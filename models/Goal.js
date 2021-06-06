@@ -46,30 +46,27 @@ Goal.init(
     goal_start: {
       type: DataTypes.DATEONLY,
       // get: function () {
-        //   return moment.utc(this.getDataValue('goalCreated')).format('YYYY-MM-DD')
-        // }
-      },
-      
-      goal_finish: {
-        type: DataTypes.DATEONLY,
-        // get: function () {
-          //   return moment.utc(this.getDataValue('goalFinishBy')).format('YYYY-MM-DD')
-          // },
-          allowNull: true,
-        },
-        
-        isComplete: {
-          type: DataTypes.BOOLEAN,
-          defaultValue: false,
-        },
-        
-        completedDate: {
-          type: DataTypes.DATEONLY
-        },
-        
-        lastRefresh: {
-          type: DataTypes.DATE
-        },
+      //   return moment.utc(this.getDataValue('goalCreated')).format('YYYY-MM-DD')
+      // }
+    },
+
+    goal_finish: {
+      type: DataTypes.DATEONLY,
+      // get: function () {
+      //   return moment.utc(this.getDataValue('goalFinishBy')).format('YYYY-MM-DD')
+      // },
+      allowNull: true,
+    },
+
+    isComplete: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+
+    lastCompletedDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
 
         lastUpdate: {
           type: DataTypes.DATE,
