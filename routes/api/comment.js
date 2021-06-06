@@ -36,8 +36,16 @@ router.get('/:id', async (req, res) => {
 // Create new comment!
 router.post('/', tokenAuth, async (req, res) => {
   try {
-    const newComment = await Comment.create(req.body);
+    const newComment = await Comment.create({
+      comment_content: req.body.comment_content,
+      user_id: req.user.id,
+      goal_id: req.body.goal
+    });
 
+    // await newComment.addUser(req.user.id)
+    // await newComment.addGoal(req.body.goal)
+    console.log('NEW COMMENT:', newComment);
+    
     res.status(200).json(newComment);
   } catch (err) {
     console.log(err);
