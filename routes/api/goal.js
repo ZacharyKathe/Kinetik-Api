@@ -1,10 +1,6 @@
 const router = require("express").Router();
 const tokenAuth = require("../../middleware/tokenAuth")
-<<<<<<< HEAD
 const { User, Goal, Comment, CompletedDates } = require('../../models')
-=======
-const { User, Goal, Comment, Group } = require('../../models')
->>>>>>> 46d15ae7125f21b0de7c44947a6b41c99a063a85
 
 //Get All Goals
 router.get('/', async (req, res) => {
