@@ -18,9 +18,9 @@ const transporter = nodemailer.createTransport({
 
 // SIGNUP: prefix: /
 router.post("/signup", (req, res) => {
-    console.log('THIS IS THE REQ BODY===============');
+    // console.log('THIS IS THE REQ BODY===============');
     
-    console.log(req.body);
+    // console.log(req.body);
     
     User.create({
       username: req.body.username,
@@ -36,8 +36,8 @@ router.post("/signup", (req, res) => {
         {
           expiresIn: "2h"
         })
-      console.log(token);
-      console.log(newUser);
+      // console.log(token);
+      // console.log(newUser);
       res.json({ token, user: newUser })
     }).catch(err => {
       console.log(err);
@@ -70,7 +70,7 @@ router.post("/login", (req, res) => {
         {
           expiresIn: "2h"
         })
-      console.log(token);
+      // console.log(token);
       res.json({ token, user })
     }
   })
@@ -88,7 +88,7 @@ router.get('/logout', (req, res) => {
 
 
 router.post('/invite', tokenAuth, (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const options = {
     from: "kinetikapp@yahoo.com",
     to: req.body.invitedUser,
@@ -108,7 +108,7 @@ router.post('/invite', tokenAuth, (req, res) => {
       console.log(err);
       return;
     } else {
-      console.log("sent:" + info.response);
+      // console.log("sent:" + info.response);
       res.json(200)
     }
   })
