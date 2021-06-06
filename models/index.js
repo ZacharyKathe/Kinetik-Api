@@ -2,6 +2,7 @@ const User = require('./User');
 const Goal = require('./Goal');
 const Group = require('./Group');
 const Comment = require('./Comment');
+const CompletedDates = require('./CompletedDates');
 
 // One user can have many goals!
 User.hasMany(Goal, {
@@ -46,6 +47,15 @@ Comment.belongsTo(User, {
   foreignKey: 'user_id',
 })
 
+Goal.hasMany(CompletedDates, {
+  foreignKey: 'goal_id',
+  onDelete: 'CASCADE'
+})
+
+CompletedDates.belongsTo(Goal, {
+  foreignKey: 'goal_id'
+})
+
 
 
 
@@ -54,5 +64,6 @@ module.exports = {
   User,
   Goal,
   Group,
-  Comment
+  Comment,
+  CompletedDates
 }

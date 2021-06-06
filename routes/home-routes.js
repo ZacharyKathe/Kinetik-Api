@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 // const { json } = require('sequelize/types');
 const router = express.Router();
 const tokenAuth = require("../middleware/tokenAuth")
-const { User, Goal, Group, Comment } = require('../models')
+const { User, Goal, Group, Comment, CompletedDates } = require('../models')
 
 // All HOME ROUTES, prefix: /
 
@@ -44,10 +44,12 @@ router.get("/incomplete-goals", tokenAuth, async (req, res) => {
         where: {
           isComplete: false
         },
-        include: [{ model: Comment }]
+        include: [{ model: Comment }, { model: CompletedDates }]
       }, { 
         model: Group,
-        include: [{ model: User }]}]
+        include: [{ model: User }]
+        }
+      ]
     })  
     console.log(loggedUser);
 
@@ -71,10 +73,12 @@ router.get("/complete-goals", tokenAuth, async (req, res) => {
         where: {
           isComplete: true
         },
-        include: [{ model: Comment }]
-      }, { 
+        include: [{ model: Comment, model: CompletedDates }]
+      }, 
+      { 
         model: Group,
-        include: [{ model: User }]}]
+        include: [{ model: User }]
+      }]
     })  
     console.log(loggedUser);
 

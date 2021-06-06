@@ -62,8 +62,9 @@ Goal.init(
       defaultValue: false,
     },
 
-    completedDate: {
-      type: DataTypes.DATEONLY
+    lastCompletedDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
     },
 
     lastRefresh: {
