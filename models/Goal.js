@@ -32,44 +32,49 @@ Goal.init(
       defaultValue: 0,
     },
 
+    
     goal_target : {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-
+    
     value_type : {
       type: DataTypes.STRING,
       allowNull: true
     },
-
+    
     goal_start: {
       type: DataTypes.DATEONLY,
       // get: function () {
-      //   return moment.utc(this.getDataValue('goalCreated')).format('YYYY-MM-DD')
-      // }
-    },
+        //   return moment.utc(this.getDataValue('goalCreated')).format('YYYY-MM-DD')
+        // }
+      },
+      
+      goal_finish: {
+        type: DataTypes.DATEONLY,
+        // get: function () {
+          //   return moment.utc(this.getDataValue('goalFinishBy')).format('YYYY-MM-DD')
+          // },
+          allowNull: true,
+        },
+        
+        isComplete: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
+        },
+        
+        completedDate: {
+          type: DataTypes.DATEONLY
+        },
+        
+        lastRefresh: {
+          type: DataTypes.DATE
+        },
 
-    goal_finish: {
-      type: DataTypes.DATEONLY,
-      // get: function () {
-      //   return moment.utc(this.getDataValue('goalFinishBy')).format('YYYY-MM-DD')
-      // },
-      allowNull: true,
-    },
-
-    isComplete: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-
-    completedDate: {
-      type: DataTypes.DATEONLY
-    },
-
-    lastRefresh: {
-      type: DataTypes.DATE
-    }
-  },
+        lastUpdate: {
+          type: DataTypes.DATE,
+        }
+      },
 
   {
     sequelize,

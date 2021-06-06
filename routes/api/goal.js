@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const tokenAuth = require("../../middleware/tokenAuth")
-const { User, Goal, Comment } = require('../../models')
+const { User, Goal, Comment, Group } = require('../../models')
 
 //Get All Goals
 router.get('/', async (req, res) => {
@@ -25,7 +25,11 @@ router.get('/:id', async (req, res) => {
         {
           model: Comment,
           include: { model: User }
-        }]
+        },
+        {
+          model: Group
+        }
+      ]
       });
 
     const thisGoal = goalData.get({ plain: true });
@@ -61,6 +65,8 @@ router.put('/:id', tokenAuth, async (req, res) => {
         }
       }
     )
+    console.log(req.body);
+    
     await editGoal.update(req.body)
     res.json(200).json(editGoal);
   } catch (err) {

@@ -10,19 +10,19 @@ const { User, Goal, Group, Comment } = require('../models')
 // User home, displays their goals
 router.get("/dashboard", tokenAuth, async (req, res) => {
   try {
-    console.log(req.user.id);
+    // console.log(req.user.id);
     const loggedUser = await User.findOne({
       where: {
         id: req.user.id
       },
       include: [{ 
         model: Goal,
-        include: [{ model: Comment }]
+        include: [{ model: Comment }, { model: Group }]
       }, { 
         model: Group,
         include: [{ model: User }]}]
     })  
-    console.log(loggedUser);
+    // console.log(loggedUser);
 
     res.status(200).json(loggedUser)
   } catch (err) {
@@ -34,7 +34,7 @@ router.get("/dashboard", tokenAuth, async (req, res) => {
 // User home, get only incomplete goals
 router.get("/incomplete-goals", tokenAuth, async (req, res) => {
   try {
-    console.log(req.user.id);
+    // console.log(req.user.id);
     const loggedUser = await User.findOne({
       where: {
         id: req.user.id
@@ -49,7 +49,7 @@ router.get("/incomplete-goals", tokenAuth, async (req, res) => {
         model: Group,
         include: [{ model: User }]}]
     })  
-    console.log(loggedUser);
+    // console.log(loggedUser);
 
     res.status(200).json(loggedUser)
   } catch (err) {
@@ -61,7 +61,7 @@ router.get("/incomplete-goals", tokenAuth, async (req, res) => {
 // User home, get only incomplete goals
 router.get("/complete-goals", tokenAuth, async (req, res) => {
   try {
-    console.log(req.user.id);
+    // console.log(req.user.id);
     const loggedUser = await User.findOne({
       where: {
         id: req.user.id
@@ -76,7 +76,7 @@ router.get("/complete-goals", tokenAuth, async (req, res) => {
         model: Group,
         include: [{ model: User }]}]
     })  
-    console.log(loggedUser);
+    // console.log(loggedUser);
 
     res.status(200).json(loggedUser)
   } catch (err) {

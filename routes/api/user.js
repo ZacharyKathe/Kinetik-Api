@@ -50,6 +50,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+
 // Delete specific user (how to make it so user can only delete their profile?)
 router.delete('/:id', tokenAuth, async (req, res) => {
   try {
