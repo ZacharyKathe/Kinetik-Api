@@ -25,6 +25,16 @@ Group.belongsToMany(User, {
   through: "GroupUser",
 })
 
+// Each goal can be a part of many groups!
+Goal.belongsToMany(Group, {
+  through: 'GroupGoal',
+});
+
+// Many goals can have the same group!
+Group.belongsToMany(Goal, {
+  through: "GroupGoal",
+})
+
 // Each goal can have many comments!
 Goal.hasMany(Comment, {
   foreignKey: 'goal_id',

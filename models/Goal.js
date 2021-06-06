@@ -32,16 +32,17 @@ Goal.init(
       defaultValue: 0,
     },
 
+    
     goal_target : {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-
+    
     value_type : {
       type: DataTypes.STRING,
       allowNull: true
     },
-
+    
     goal_start: {
       type: DataTypes.DATEONLY,
       // get: function () {
@@ -67,10 +68,10 @@ Goal.init(
       allowNull: true
     },
 
-    lastRefresh: {
-      type: DataTypes.DATE
-    }
-  },
+        lastUpdate: {
+          type: DataTypes.DATE,
+        }
+      },
 
   {
     sequelize,
