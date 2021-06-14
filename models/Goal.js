@@ -70,6 +70,10 @@ Goal.init(
 
     lastUpdate: {
       type: DataTypes.DATE,
+    },
+
+    lastRefresh: {
+      type: DataTypes.DATE,
     }
   },
 
