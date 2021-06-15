@@ -96,7 +96,7 @@ router.post('/invite', tokenAuth, (req, res) => {
     html: `<h3>Hey, this is ${req.body.myName}!</h3> 
     <p>I'd love for you to come join my group on Kinetik, and we can help encourage each other as we strive to achieve our goals!<p>
     
-    <p>If you do not have a profile yet, first visit here and sign up: <a href="http://localhost:3000">Signup</a></p>
+    <p>If you do not have a profile yet, first visit here and sign up: <a href="http://kinetikapp.herokuapp.com/">Signup</a></p>
 
     <p>If you already do, just login, and then go here to accept my invitation: <a href="http://${req.body.groupUrl}">Accept</a></p>
     <p>Once you've done that, you can add whatever goal you'd like to share, and comment/give kudos on others' progress! Pretty simple, right?</p>

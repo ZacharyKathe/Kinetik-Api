@@ -27,22 +27,22 @@ Goal.init(
       allowNull: true
     },
 
-    goal_progress : {
+    goal_progress: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
 
-    
-    goal_target : {
+
+    goal_target: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    
-    value_type : {
+
+    value_type: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    
+
     goal_start: {
       type: DataTypes.DATEONLY,
       // get: function () {
@@ -68,10 +68,10 @@ Goal.init(
       allowNull: true
     },
 
-        lastUpdate: {
-          type: DataTypes.DATE,
-        }
-      },
+    lastUpdate: {
+      type: DataTypes.DATE,
+    }
+  },
 
   {
     sequelize,
