@@ -58,6 +58,11 @@ Goal.init(
       allowNull: true,
     },
 
+    cheers: {
+      type: DataTypes.INTEGER,
+     defaultValue: 0
+    },
+
     isComplete: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
