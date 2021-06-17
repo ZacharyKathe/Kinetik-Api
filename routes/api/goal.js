@@ -74,6 +74,31 @@ router.put('/:id', tokenAuth, async (req, res) => {
   }
 });
 
+router.put("/:id/cheer", tokenAuth, async (req, res) => {
+  console.log("reached cheer route");
+  try {
+    const editGoal = await Goal.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+    // Adds new user to this Goal if thst user accepts invite
+    console.log(req.user);
+    console.log(req.body)
+    
+    if (req.body.addCheers === true) {
+      await editGoal.increment('cheers')
+    } else if (req.body.addCheers === false) {
+      await editGoal.decrement('cheers')
+    } else console.log("something went wrong")
+    console.log("after update:", editGoal);
+    res.status(200).json(editGoal);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
+
 // Delete this specific goal
 router.delete('/:id', tokenAuth, async (req, res) => {
   try {

@@ -58,6 +58,11 @@ Goal.init(
       allowNull: true,
     },
 
+    cheers: {
+      type: DataTypes.INTEGER,
+     defaultValue: 0
+    },
+
     isComplete: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -69,6 +74,10 @@ Goal.init(
     },
 
     lastUpdate: {
+      type: DataTypes.DATE,
+    },
+
+    lastRefresh: {
       type: DataTypes.DATE,
     }
   },
