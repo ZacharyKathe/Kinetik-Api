@@ -1,14 +1,14 @@
 const router = require("express").Router();
-const tokenAuth = require("../../middleware/tokenAuth")
+const tokenAuth = require("../../middleware/tokenAuth");
 // const userController = require("../../controllers/userController");
-const { User, Goal, Group } = require('../../models')
+const { User, Goal, Group } = require("../../models");
 
 // Matches with "/api/groups", gets all groups
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const groupData = await Group.findAll();
 
-    const allgroups = groupData.map(group => group.get({ plain: true }))
+    const allgroups = groupData.map((group) => group.get({ plain: true }));
     res.status(200).json(allgroups);
   } catch (err) {
     console.log(err);
@@ -17,20 +17,22 @@ router.get('/', async (req, res) => {
 });
 
 // Gets specific group with associated users
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const groupData = await Group.findByPk(req.params.id, {
-      include: [{
-        model: User,
-        include: [{ model: Goal }]
-      },
-      {
-        model: Goal
-      }],
+      include: [
+        {
+          model: User,
+          include: [{ model: Goal }],
+        },
+        {
+          model: Goal,
+        },
+      ],
     });
 
     if (!groupData) {
-      res.status(404).json({ message: 'No group found with that id!' });
+      res.status(404).json({ message: "No group found with that id!" });
       return;
     }
 
@@ -42,7 +44,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Creates a new group
-router.post('/', tokenAuth, async (req, res) => {
+router.post("/", tokenAuth, async (req, res) => {
   // console.log(req.body);
   try {
     const newGroup = await Group.create(req.body);
@@ -58,21 +60,18 @@ router.post('/', tokenAuth, async (req, res) => {
 });
 
 // Edit this specific group
-router.put('/:id', tokenAuth, async (req, res) => {
-  console.log('reached');
+router.put("/:id", tokenAuth, async (req, res) => {
   try {
-    const editGroup = await Group.findOne(
-      {
-        where: {
-          id: req.params.id
-        }
-      }
-    )
+    const editGroup = await Group.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
     // Adds new user to this group if thst user accepts invite
     console.log(req.user);
     console.log(editGroup);
     await editGroup.addUser(req.user.id);
-    await editGroup.update(req.body)
+    await editGroup.update(req.body);
     res.status(200).json(editGroup);
   } catch (err) {
     console.log(err);
@@ -80,21 +79,20 @@ router.put('/:id', tokenAuth, async (req, res) => {
   }
 });
 
+
 // add goal to group!
-router.put('/addgoal/:id', tokenAuth, async (req, res) => {
+router.put("/addgoal/:id", tokenAuth, async (req, res) => {
   console.log(req.body.goal_id);
   try {
-    const editGroup = await Group.findOne(
-      {
-        where: {
-          id: req.params.id
-        }
-      }
-    )
+    const editGroup = await Group.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
     // Adds new user to this group if thst user accepts invite
     await editGroup.addGoal(req.body.goal_id);
     // console.log(editGroup);
-    await editGroup.update(req.body)
+    await editGroup.update(req.body);
     res.status(200).json(editGroup);
   } catch (err) {
     console.log(err);
@@ -103,20 +101,18 @@ router.put('/addgoal/:id', tokenAuth, async (req, res) => {
 });
 
 // remove goal from group!
-router.put('/removegoal/:id', tokenAuth, async (req, res) => {
+router.put("/removegoal/:id", tokenAuth, async (req, res) => {
   console.log(req.body.goal_id);
   try {
-    const editGroup = await Group.findOne(
-      {
-        where: {
-          id: req.params.id
-        }
-      }
-    )
+    const editGroup = await Group.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
     // Adds new user to this group if thst user accepts invite
     await editGroup.removeGoal(req.body.goal_id);
     // console.log(editGroup);
-    await editGroup.update(req.body)
+    await editGroup.update(req.body);
     res.status(200).json(editGroup);
   } catch (err) {
     console.log(err);
@@ -125,24 +121,20 @@ router.put('/removegoal/:id', tokenAuth, async (req, res) => {
 });
 
 // remove user from group!
-router.put('/removeuser/:id', tokenAuth, async (req, res) => {
+router.put("/removeuser/:id", tokenAuth, async (req, res) => {
   console.log(req.body.goal_id);
   try {
-    const editGroup = await Group.findOne(
-      {
-        where: {
-          id: req.params.id
-        },
-        include: { model: User }
-      }
-    )
+    const editGroup = await Group.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: { model: User },
+    });
     // Adds new user to this group if thst user accepts invite
     await editGroup.removeUser(req.user.id);
 
-    
-    await editGroup.update(req.body)
+    await editGroup.update(req.body);
     console.log("group updated:", editGroup);
-    
 
     res.status(200).json(editGroup);
   } catch (err) {
@@ -152,7 +144,7 @@ router.put('/removeuser/:id', tokenAuth, async (req, res) => {
 });
 
 // Delete this specific group
-router.delete('/:id', tokenAuth, async (req, res) => {
+router.delete("/:id", tokenAuth, async (req, res) => {
   try {
     const groupData = await Group.destroy({
       where: {
@@ -171,6 +163,5 @@ router.delete('/:id', tokenAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 
 module.exports = router;
