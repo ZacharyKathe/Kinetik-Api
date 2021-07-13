@@ -2,6 +2,7 @@ const router = require("express").Router();
 const tokenAuth = require("../../middleware/tokenAuth");
 // const userController = require("../../controllers/userController");
 const { User, Goal, Group } = require("../../models");
+const ProfilePic = require('../../models/profilePic')
 
 // Matches with "/api/groups", gets all groups
 router.get("/", async (req, res) => {
@@ -23,7 +24,7 @@ router.get("/:id", async (req, res) => {
       include: [
         {
           model: User,
-          include: [{ model: Goal }],
+          include: [{ model: Goal, model: ProfilePic }],
         },
         {
           model: Goal,
