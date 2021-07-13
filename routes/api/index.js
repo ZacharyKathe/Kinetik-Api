@@ -12,6 +12,6 @@ router.use("/goals", goalRoutes);
 router.use("/groups", groupRoutes);
 router.use("/comments", commentRoutes);
 router.use("/completed", completedRoutes);
-router.use("/profilePictures", pictureRoutes);
+router.use("/profile-pics", pictureRoutes);
 
 module.exports = router;
