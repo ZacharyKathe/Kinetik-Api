@@ -3,6 +3,7 @@ const Goal = require('./Goal');
 const Group = require('./Group');
 const Comment = require('./Comment');
 const CompletedDates = require('./CompletedDates');
+const ProfilePic = require("./ProfilePic");
 
 // One user can have many goals!
 User.hasMany(Goal, {
@@ -14,6 +15,16 @@ User.hasMany(Goal, {
 Goal.belongsTo(User, {
   foreignKey: 'user_id',
 });
+
+//One user can have many Profile Pictures
+User.hasMany(ProfilePic,{
+  foreignKey: "user_id",
+  onDelete: 'CASCADE'
+})
+
+ProfilePic.belongsTo(User, {
+  foreignKey: 'user_id'
+})
 
 // Each user can be a part of many groups!
 User.belongsToMany(Group, {
