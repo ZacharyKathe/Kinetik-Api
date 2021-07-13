@@ -1,30 +1,30 @@
-const { Model, DataTypes, TEXT } = require('sequelize');
-const sequelize = require('../config/connection');
-const moment = require('moment');
+const { Model, DataTypes, TEXT } = require("sequelize");
+const sequelize = require("../config/connection");
+const moment = require("moment");
 
-class Goal extends Model { }
+class Goal extends Model {}
 
 Goal.init(
   {
     goal_category: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     goal_name: {
       type: DataTypes.STRING,
       trim: true,
-      allowNull: false
+      allowNull: false,
     },
 
     goal_frequency: {
       type: DataTypes.STRING,
       trim: true,
-      allowNull: false
+      allowNull: false,
     },
 
     goal_description: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: true,
     },
 
     goal_progress: {
@@ -32,15 +32,14 @@ Goal.init(
       defaultValue: 0,
     },
 
-
     goal_target: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
     },
 
     value_type: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
 
     goal_start: {
@@ -60,7 +59,7 @@ Goal.init(
 
     cheers: {
       type: DataTypes.INTEGER,
-     defaultValue: 0
+      defaultValue: 0,
     },
 
     isComplete: {
@@ -70,7 +69,7 @@ Goal.init(
 
     lastCompletedDate: {
       type: DataTypes.DATEONLY,
-      allowNull: true
+      allowNull: true,
     },
 
     lastUpdate: {
@@ -79,7 +78,7 @@ Goal.init(
 
     lastRefresh: {
       type: DataTypes.DATE,
-    }
+    },
   },
 
   {
@@ -87,7 +86,7 @@ Goal.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'Goal',
+    modelName: "Goal",
   }
 );
 
