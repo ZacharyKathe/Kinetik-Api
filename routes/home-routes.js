@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const tokenAuth = require("../middleware/tokenAuth")
 const { User, Goal, Group, Comment, CompletedDates } = require('../models')
+const ProfilePic = require("../models/ProfilePic")
 
 // All HOME ROUTES, prefix: /
 
@@ -20,7 +21,9 @@ router.get("/dashboard", tokenAuth, async (req, res) => {
         include: [{ model: Comment }, { model: Group }]
       }, { 
         model: Group,
-        include: [{ model: User }]}]
+        include: [{ model: User }]},
+        { model: ProfilePic } 
+      ]
     })  
     // console.log(loggedUser);
 

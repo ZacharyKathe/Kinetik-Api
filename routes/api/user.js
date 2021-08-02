@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const { User, Goal, Group, Comment } = require('../../models')
+const { User, Goal, Group } = require('../../models')
+const ProfilePic = require("../../models/ProfilePic");
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken');
 const tokenAuth = require("../../middleware/tokenAuth");
@@ -31,7 +32,7 @@ router.get('/:id', async (req, res) => {
   try {
 
     const userData = await User.findByPk(req.params.id, {
-      include: [{ model: Goal }, { model: Group }],
+      include: [{ model: Goal }, { model: Group }, {model: ProfilePic }],
       attributes: {
         exclude: ["password"],
       }

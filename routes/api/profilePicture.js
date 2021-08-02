@@ -27,20 +27,18 @@ router.post("/", tokenAuth, async (req, res) => {
         upload(fileStr, { 
         upload_preset: 'kinetik-pics'
     })
-    console.log(uploadResponse)
-    res.json({msg: 'WOO UPLAODED'})
-    // const newPic = await ProfilePic.create(req.body);
-    // console.log(req.user);
-    // newPic.user_id = req.user.id;
-    // newPic.save();
-    // res.status(200).json(newPic);
+    
+    const newPic = await ProfilePic.create({profilePicture: uploadResponse.secure_url });
+    newPic.user_id = req.user.id;
+    newPic.save();
+    res.status(200).json(newPic);
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
   }
 });
 
-// Delete this specific group
+// Delete this specific profile pic
 router.delete("/:id", tokenAuth, async (req, res) => {
   try {
     const picData = await ProfilePic.destroy({
