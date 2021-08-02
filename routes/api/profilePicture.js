@@ -1,12 +1,20 @@
 const router = require("express").Router();
 const tokenAuth = require("../../middleware/tokenAuth");
-const { cloudinary } = require('../../utils/cloudinary')
+const { cloudinary } = require("../../utils/cloudinary");
 const User = require("../../models/User");
 const ProfilePic = require("../../models/ProfilePic");
 
 // Get all pictures @ api/profile-pictures
 router.get("/", async (req, res) => {
   try {
+    // const { resources } = await cloudinary.search.expression
+    // ('folder:kinetik-pics')
+    // .sort_by('public_id', 'desc')
+    // .max_results(30)
+    // .execute();
+    // console.log(resources)
+    // const publicIds = resources.map( file => file.public_id);
+    // res.send(publicIds)
     const picData = await ProfilePic.findAll({
       include: [{ model: User }],
     });
